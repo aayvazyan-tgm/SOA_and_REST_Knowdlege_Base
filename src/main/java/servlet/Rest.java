@@ -4,14 +4,13 @@ package servlet;
  * @author Ari Ayvazyan
  * @version 16.04.2015
  */
+import model.Eintrag;
+
 import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.Query;
+import javax.persistence.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -33,27 +32,27 @@ public class Rest {
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public void create(Customer customer) {
-        entityManager.persist(customer);
+    public void create(Eintrag eintrag) {
+        entityManager.persist(eintrag);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("{id}")
-    public Customer read(@PathParam("id") long id) {
-        return entityManager.find(Customer.class, id);
+    public Eintrag read(@PathParam("id") long id) {
+        return entityManager.find(Eintrag.class, id);
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_XML)
-    public void update(Customer customer) {
+    public void update(Eintrag customer) {
         entityManager.merge(customer);
     }
 
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") long id) {
-        Customer customer = read(id);
+        Eintrag customer = read(id);
         if(null != customer) {
             entityManager.remove(customer);
         }
@@ -61,10 +60,10 @@ public class Rest {
 
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    @Path("findCustomersByCity/{city}")
-    public List<Customer> findCustomersByCity(@PathParam("city") String city) {
-        Query query = entityManager.createNamedQuery("findCustomersByCity");
-        query.setParameter("city", city);
+    @Path("findThreadByTag/{tag}")
+    public List<Eintrag> findThreadByTag(@PathParam("tag") String tag) {
+        Query query = entityManager.createQuery("SELECT c FROM Eintrag c", Eintrag.class); //TODO YAY Helmuth machts
+        query.setParameter("tag", tag);
         return query.getResultList();
     }
 
