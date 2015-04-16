@@ -23,18 +23,18 @@ public class MySessionFactory {
     private MySessionFactory() {
 
             Configuration config= new Configuration()
-                    .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect")
-                    .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
-                    .setProperty("hibernate.connection.url", "jdbc:mysql://10.0.104.48/knowlegebase")
+                    .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
+                    .setProperty("hibernate.connection.driver_class", "org.h2.Driver")
+                    .setProperty("hibernate.connection.url", "jdbc:h2:database/./knowdlegebase")
                     .setProperty("hibernate.connection.username", "helmuth")
-                    .setProperty("hibernate.connection.password", "helmuth")
+                    .setProperty("hibernate.connection.password", "")
                     .setProperty("hibernate.hbm2ddl.auto", "create")
                     .setProperty("hibernate.show_sql", "true")
 
                     .addAnnotatedClass(Author.class)
                     .addAnnotatedClass(Eintrag.class);
 
-            StandardServiceRegistryBuilder ssrb = new StandardServiceRegistryBuilder()
+        StandardServiceRegistryBuilder ssrb = new StandardServiceRegistryBuilder()
                     .applySettings(config.getProperties());
             sessionFactory= config.buildSessionFactory(ssrb.build());
 
