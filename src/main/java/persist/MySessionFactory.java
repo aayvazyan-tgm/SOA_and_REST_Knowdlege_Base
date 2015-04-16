@@ -2,6 +2,8 @@ package persist;
 
 import model.Author;
 import model.Eintrag;
+import model.Tag;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -32,6 +34,7 @@ public class MySessionFactory {
                     .setProperty("hibernate.show_sql", "true")
 
                     .addAnnotatedClass(Author.class)
+                    .addAnnotatedClass(Tag.class)
                     .addAnnotatedClass(Eintrag.class);
 
         StandardServiceRegistryBuilder ssrb = new StandardServiceRegistryBuilder()
