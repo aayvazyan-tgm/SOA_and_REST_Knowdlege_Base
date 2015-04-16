@@ -19,9 +19,9 @@ import java.util.List;
  */
 public class MySessionFactory {
 
-    private static SessionFactory sessionFactory;
-    private static MySessionFactory instance;
+    private SessionFactory sessionFactory;
 
+    private static MySessionFactory instance;
     private MySessionFactory() {
 
             Configuration config= new Configuration()
@@ -48,6 +48,15 @@ public class MySessionFactory {
             instance= new MySessionFactory();
         }
         return instance;
+    }
+
+    /**
+     * Getter for property 'sessionFactory'.
+     *
+     * @return Value for property 'sessionFactory'.
+     */
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 
     public void save(Object u) {
