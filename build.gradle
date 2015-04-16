@@ -18,4 +18,9 @@ dependencies {
     compile 'javax:javaee-api:7.0'
     compile 'org.hibernate:hibernate-core:4.3.9.Final'
     compile 'com.h2database:h2:1.4.187'
+    //To compile the WSDL
+    compile 'org.apache.axis:axis:1.4'
+    compile 'commons-logging:commons-logging:1.2'
+    compile 'commons-discovery:commons-discovery:0.5'
+    compile 'org.apache.axis2:axis2-kernel:1.6.2'
 }
