@@ -94,4 +94,8 @@ public class MySessionFactory {
         session.close();
         return l;
     }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
 }
