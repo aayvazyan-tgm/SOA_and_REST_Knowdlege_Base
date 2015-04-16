@@ -104,7 +104,7 @@ public class MySessionFactory {
         return l;
     }
 
-    public SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactoryObject() {
         return sessionFactory;
     }
 }
