@@ -1,9 +1,12 @@
 package server;
 
+import model.Author;
+import model.Eintrag;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import persist.MySessionFactory;
 import servlet.Servlet;
 
 /**
@@ -25,6 +28,19 @@ public class JettyEmbeddedRunner {
 			handler.addServlet(servletHolder, "/*");
 			server.addConnector(c);
 			server.start();
+
+			MySessionFactory mySessionFactory= MySessionFactory.getInstance();
+
+			Author a= new Author();
+			a.setName("TestUser");
+			a.setEmail("test@email.com");
+
+			Eintrag e= new Eintrag();
+			e.setAuthor(a);
+			e.setDeleted(false);
+
+			mySessionFactory.save(a);
+			mySessionFactory.save(e);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
