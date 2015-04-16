@@ -5,7 +5,12 @@ import model.Tag;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.internal.StandardServiceRegistryImpl;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import persist.MySessionFactory;
 
 import javax.jws.WebService;
 import java.util.List;
@@ -19,7 +24,7 @@ public class SOASearcher implements Searchable {
     }
 
     public SOASearcher() {
-        sf = new AnnotationConfiguration().configure().buildSessionFactory();
+        sf = MySessionFactory.getInstance().getSessionFactory();
     }
 
     /**
