@@ -1,10 +1,10 @@
 package model;
 
-import org.hibernate.annotations.Parent;
-
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name= "Eintrag")
@@ -12,7 +12,8 @@ public class Eintrag {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	@Column(name= "id")
+	private String id;
 
 	@JoinColumn(name= "email")
 	@ManyToOne
@@ -27,13 +28,14 @@ public class Eintrag {
 	private Date modifikationDate;
 
 	@Column
-	private byte[] file;
-
-	@Column
 	private boolean deleted;
 
+	@JoinColumn(name= "tag_name")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
+	private Tag tag;
+
 	@PreUpdate
-	protected void onUpdate() {
+	public void onUpdate() {
 		modifikationDate = new Date();
 	}
 
@@ -65,19 +67,11 @@ public class Eintrag {
 		this.deleted = deleted;
 	}
 
-	public byte[] getFile() {
-		return file;
-	}
-
-	public void setFile(byte[] file) {
-		this.file = file;
-	}
-
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -87,5 +81,13 @@ public class Eintrag {
 
 	public void setModifikationDate(Date modifikationDate) {
 		this.modifikationDate = modifikationDate;
+	}
+
+	public Tag getTag() {
+		return tag;
+	}
+
+	public void setTags(Tag tag) {
+		this.tag = tag;
 	}
 }

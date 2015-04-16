@@ -35,12 +35,12 @@ public class JettyEmbeddedRunner {
 			a.setName("TestUser");
 			a.setEmail("test@email.com");
 
-			Eintrag e= new Eintrag();
-			e.setAuthor(a);
-			e.setDeleted(false);
+			//Eintrag e= new Eintrag();
+			//e.setAuthor(a);
+			//e.setDeleted(false);
 
 			mySessionFactory.save(a);
-			mySessionFactory.save(e);
+			//mySessionFactory.save(e);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
