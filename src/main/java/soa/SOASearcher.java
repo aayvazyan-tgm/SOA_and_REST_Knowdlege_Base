@@ -1,6 +1,7 @@
 package soa;
 
 import model.Eintrag;
+import model.Tag;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

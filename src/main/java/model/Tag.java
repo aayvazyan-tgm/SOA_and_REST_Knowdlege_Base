@@ -4,6 +4,7 @@ package model;
 import javax.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,5 +38,10 @@ public class Tag {
 
     public void setName(String tag_name) {
         this.tag_name = tag_name;
+    }
+
+    public List<Eintrag> getEintraege(){
+        //TODO Helmuth :) return the related Einträge
+        return null;
     }
 }
