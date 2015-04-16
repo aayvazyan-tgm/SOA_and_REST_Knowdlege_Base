@@ -103,8 +103,4 @@ public class MySessionFactory {
         session.close();
         return l;
     }
-
-    public SessionFactory getSessionFactoryObject() {
-        return sessionFactory;
-    }
 }
