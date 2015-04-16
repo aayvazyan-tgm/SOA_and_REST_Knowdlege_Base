@@ -30,9 +30,9 @@ public class Eintrag {
 	@Column
 	private boolean deleted;
 
-	@JoinColumn(name= "tag_name")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
-	private Tag tag;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
+	@JoinTable(name= "eintrag_tag", joinColumns= { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "tag_name") })
+	private Set<Tag> tag;
 
 	@PreUpdate
 	public void onUpdate() {
@@ -83,11 +83,11 @@ public class Eintrag {
 		this.modifikationDate = modifikationDate;
 	}
 
-	public Tag getTag() {
+	public Set<Tag> getTag() {
 		return tag;
 	}
 
-	public void setTags(Tag tag) {
+	public void setTags(Set<Tag> tag) {
 		this.tag = tag;
 	}
 }

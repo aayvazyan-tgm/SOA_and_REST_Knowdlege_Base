@@ -16,7 +16,7 @@ public class Tag {
     @Id
     private String tag_name;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, targetEntity = Eintrag.class)
+    @ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, targetEntity = Eintrag.class)
     @JoinColumn(name= "tag_eintrag")
     private Set<String> tag;
 
