@@ -11,6 +11,6 @@ public class Main {
             new JettyEmbeddedRunner().startServer(8081);
             System.out.println("Started Servlet/s");
             SOAPublisher.publish();
-            new SOAClient("localhost", 8082, "SOA");
+            new SOAClient("localhost", 8081, "SOA");
     }
 }
