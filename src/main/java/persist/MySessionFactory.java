@@ -27,7 +27,7 @@ public class MySessionFactory {
             Configuration config= new Configuration()
                     .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
                     .setProperty("hibernate.connection.driver_class", "org.h2.Driver")
-                    .setProperty("hibernate.connection.url", "jdbc:h2:database/./knowledgebase;mv_store=false")
+                    .setProperty("hibernate.connection.url", "jdbc:h2:tcp/./knowledgebase;mv_store=false")
                     .setProperty("hibernate.connection.username", "sa")
                     .setProperty("hibernate.connection.password", "")
                     .setProperty("hibernate.hbm2ddl.auto", "create")

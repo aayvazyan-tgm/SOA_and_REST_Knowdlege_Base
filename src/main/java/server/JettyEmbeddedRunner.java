@@ -6,8 +6,15 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import persist.MySessionFactory;
 import servlet.Servlet;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Embeds a Jetty server to host the Servlet.
@@ -35,12 +42,44 @@ public class JettyEmbeddedRunner {
 			a.setName("TestUser");
 			a.setEmail("test@email.com");
 
-			//Eintrag e= new Eintrag();
-			//e.setAuthor(a);
-			//e.setDeleted(false);
+			Eintrag e= new Eintrag();
+			e.setAuthor(a);
+			e.setDeleted(false);
 
 			mySessionFactory.save(a);
-			//mySessionFactory.save(e);
+			mySessionFactory.save(e);
+
+			SessionFactory sessionFactory= mySessionFactory.getSessionFactory();
+			Session session= sessionFactory.openSession();
+
+			String[] selectiontags = {"tag_0", "tag_1"};
+
+			Set<String> selectionTags= new HashSet<String>();
+			selectionTags.add("tag_0");
+			selectionTags.add("tag_1");
+
+			//String dump= "select distinct a from Article a " +
+			//		"join a.tags t " +
+			//		"where t.name in (:tags)";
+			//
+			//String hql= "select e from Eintrag e " +
+			//		"join e.tag t " +
+			//		"where t.tag in (:inputtags)";
+
+			String hqltest= "select distinct e.tag from Eintrag e " +
+					"";
+
+			//Query query= session.createQuery(hqltest);
+			//query.setParameterList("inputtags", selectionTags);
+
+			List<Eintrag> erg= session.createQuery(hqltest).list();
+
+
+			for(Eintrag eintrag : erg) {
+				System.out.println("In loop");
+				System.out.println(eintrag.getId());
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

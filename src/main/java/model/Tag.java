@@ -10,6 +10,14 @@ import java.util.Set;
 /**
  * Created by helmuthbrunner on 16/04/15.
  */
+
+//@NamedQueries({
+//        @NamedQuery(
+//                name= "relatedEntries",
+//                query = "from Tag t join t."
+//        )
+//})
+
 @Entity
 @Table(name= "Tag")
 public class Tag {
@@ -40,8 +48,8 @@ public class Tag {
         this.tag_name = tag_name;
     }
 
-    public List<Eintrag> getEintraege(){
-        //TODO Helmuth :) return the related Einträge
+    public List<Eintrag> getEintraege() {
+        //TODO Helmuth :) return the related Eintraege
         return null;
     }
 }
