@@ -8,7 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
+import rest.Rest;
 
 import java.util.List;
 
@@ -33,6 +35,8 @@ public class MySessionFactory {
                     .setProperty("hibernate.hbm2ddl.auto", "create")
                     .setProperty("hibernate.show_sql", "true")
 
+
+                    .addAnnotatedClass(Rest.class)
                     .addAnnotatedClass(Author.class)
                     .addAnnotatedClass(Tag.class)
                     .addAnnotatedClass(Eintrag.class);
