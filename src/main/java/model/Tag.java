@@ -23,29 +23,31 @@ import java.util.Set;
 public class Tag {
 
     @Id
-    private String tag_name;
+    @Column
+    @GeneratedValue
+    private Integer id;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, targetEntity = Eintrag.class)
     @JoinColumn(name= "tag_eintrag")
-    private Set<String> tag;
+    private Set<String> tag= new HashSet<String>(0);
 
     public Tag() {
     }
 
-    public Set<String> getTags() {
-        return tag;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setTags(Set<String> tag) {
         this.tag = tag;
     }
 
-    public String getName() {
-        return tag_name;
-    }
-
-    public void setName(String tag_name) {
-        this.tag_name = tag_name;
+    public Set<String> getTags() {
+        return tag;
     }
 
     public List<Eintrag> getEintraege() {

@@ -18,7 +18,7 @@ public class Author {
 	@Column
 	private Date dateJoined;
 
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name = "author_eintrag")
 	private Set<Eintrag> eintrag;
 

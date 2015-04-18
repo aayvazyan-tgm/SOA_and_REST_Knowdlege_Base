@@ -2,6 +2,7 @@ package server;
 
 import model.Author;
 import model.Eintrag;
+import model.Tag;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -41,13 +42,21 @@ public class JettyEmbeddedRunner {
 			Author a= new Author();
 			a.setName("TestUser");
 			a.setEmail("test@email.com");
+			mySessionFactory.save(a);
 
 			Eintrag e= new Eintrag();
 			e.setAuthor(a);
 			e.setDeleted(false);
-
-			mySessionFactory.save(a);
 			mySessionFactory.save(e);
+
+			Set<String> tags= new HashSet<String>();
+			tags.add("tag_0");
+			tags.add("tag_1");
+			tags.add("tag_2");
+
+			Tag tag= new Tag();
+			tag.setTags(tags);
+			mySessionFactory.save(tag);
 
 			SessionFactory sessionFactory= mySessionFactory.getSessionFactory();
 			Session session= sessionFactory.openSession();
