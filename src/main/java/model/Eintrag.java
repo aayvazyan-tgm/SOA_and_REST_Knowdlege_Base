@@ -3,7 +3,6 @@ package model;
 import javax.persistence.*;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,9 +10,8 @@ import java.util.Set;
 public class Eintrag {
 
 	@Id
-	@GeneratedValue
-	@Column(name= "id")
-	private String id;
+	@Column(name= "title")
+	private String title;
 
 	@JoinColumn(name= "email")
 	@ManyToOne
@@ -31,7 +29,7 @@ public class Eintrag {
 	private boolean deleted;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
-	@JoinTable(name= "eintrag_tag", joinColumns= { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "tag_name") })
+	@JoinTable(name= "eintrag_tag", joinColumns= { @JoinColumn(name = "title") }, inverseJoinColumns = { @JoinColumn(name = "tag_name") })
 	private Set<Tag> tag;
 
 	@PreUpdate
@@ -67,12 +65,12 @@ public class Eintrag {
 		this.deleted = deleted;
 	}
 
-	public String getId() {
-		return id;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Date getModifikationDate() {

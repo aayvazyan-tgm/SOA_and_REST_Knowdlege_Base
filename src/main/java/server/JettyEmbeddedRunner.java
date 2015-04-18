@@ -7,10 +7,10 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import persist.MySessionFactory;
+import rest.Rest;
 import servlet.Servlet;
 
 import java.util.HashSet;
@@ -35,16 +35,31 @@ public class JettyEmbeddedRunner {
 					Servlet.class);
 			handler.addServlet(servletHolder, "/*");
 			server.addConnector(c);
+			servletHolder.setInitOrder(0);
+
+
+			ServletHolder jerseyServlet = handler.addServlet(
+					org.glassfish.jersey.servlet.ServletContainer.class, "/rest/*");
+			jerseyServlet.setInitOrder(0);
+
+			// Tells the Jersey Servlet which REST service/class to load.
+			jerseyServlet.setInitParameter(
+					"jersey.config.server.provider.classnames",
+					Rest.class.getCanonicalName());
+
 			server.start();
 
-			MySessionFactory mySessionFactory= MySessionFactory.getInstance();
 
+
+			//WTF?
+			MySessionFactory mySessionFactory= MySessionFactory.getInstance();
 			Author a= new Author();
 			a.setName("TestUser");
 			a.setEmail("test@email.com");
 			mySessionFactory.save(a);
 
 			Eintrag e= new Eintrag();
+			e.setTitle("Titel");
 			e.setAuthor(a);
 			e.setDeleted(false);
 			mySessionFactory.save(e);
@@ -86,11 +101,12 @@ public class JettyEmbeddedRunner {
 
 			for(Eintrag eintrag : erg) {
 				System.out.println("In loop");
-				System.out.println(eintrag.getId());
+				System.out.println(eintrag.getTitle());
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
 		}
 	}
 }

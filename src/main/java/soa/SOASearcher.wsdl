@@ -63,7 +63,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:SOASearcherSoapBinding" name="SOASearcher">
 
-         <wsdlsoap:address location="http://localhost:8082/soa/SOASearcher"/>
+         <wsdlsoap:address location="http://localhost:8080//services/soa/SOASearcher"/>
 
       </wsdl:port>
 

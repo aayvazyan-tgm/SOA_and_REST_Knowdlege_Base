@@ -1,4 +1,4 @@
-package servlet;
+package rest;
 
 /**
  * @author Ari Ayvazyan
@@ -38,9 +38,9 @@ public class Rest {
 
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    @Path("{id}")
-    public Eintrag read(@PathParam("id") long id) {
-        return entityManager.find(Eintrag.class, id);
+    @Path("{name}")
+    public Eintrag read(@PathParam("name") String name) {
+        return entityManager.find(Eintrag.class, name);
     }
 
     @PUT
@@ -50,9 +50,9 @@ public class Rest {
     }
 
     @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") long id) {
-        Eintrag customer = read(id);
+    @Path("{name}")
+    public void delete(@PathParam("name") String name) {
+        Eintrag customer = read(name);
         if(null != customer) {
             entityManager.remove(customer);
         }
