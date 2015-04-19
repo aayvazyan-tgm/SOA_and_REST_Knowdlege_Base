@@ -3,6 +3,8 @@ package server;
 import model.Author;
 import model.Eintrag;
 import model.Tag;
+import mysql.ConnectMysql;
+import mysql.DataSource;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -14,9 +16,9 @@ import persist.MySessionFactory;
 import rest.Rest;
 import servlet.Servlet;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Embeds a Jetty server to host the Servlet.
@@ -50,66 +52,26 @@ public class JettyEmbeddedRunner {
 
 			server.start();
 
-			//WTF?
-			MySessionFactory mySessionFactory= MySessionFactory.getInstance();
-			Author a= new Author();
-			a.setName("TestUser");
-			a.setEmail("test@email.com");
-			mySessionFactory.saveOrUpdate(a);
+			DataSource ds= DataSource.get();
+			ds.setDatabasename("knowldegebase");
+			ds.setServername("192.168.0.14");
+			ds.setUsername("helmuth");
+			ds.setPassword("helmuth");
 
-			Eintrag e= new Eintrag();
-			e.setTitle("Titel");
-			e.setAuthor(a);
-			e.setDeleted(false);
+			ConnectMysql cm= ConnectMysql.get(ds);
 
-			mySessionFactory.saveOrUpdate(e);
+			ResultSet rs= cm.executeQuery("select * from Eintrag");
 
-			// write to manytomany
-			SessionFactory sessionFactory= mySessionFactory.getSessionFactory();
-			Session session= sessionFactory.openSession();
+			try {
+				while(rs.next()) {
 
-			session.beginTransaction();
+					System.out.println(rs.getString("title"));
 
-			Set<String> tags= new HashSet<String>();
-			tags.add("tag_0");
-			tags.add("tag_1");
-			tags.add("tag_2");
-
-			Tag t0= new Tag();
-			t0.setTags(tags);
-
-			tags.clear();
-			tags.add("tag_3");
-			tags.add("tag_4");
-			tags.add("tag_5");
-
-			Tag t1= new Tag();
-			t1.setTags(tags);
-
-			Set<Tag> setTags= new HashSet<Tag>();
-			setTags.add(t0);
-			setTags.add(t1);
-
-			e.setTags(setTags);
-
-			session.saveOrUpdate(e);
-			session.getTransaction().commit();
-
-			// working ---- ^^
-
-			// select from Eintrag
-
-			String hqltest= "from Eintrag";
-
-			session.beginTransaction();
-
-			List<Eintrag> erg= session.createQuery(hqltest).list();
-
-			for(Eintrag eintrag : erg) {
-				System.out.println(eintrag.getTitle());
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 
-			session.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();

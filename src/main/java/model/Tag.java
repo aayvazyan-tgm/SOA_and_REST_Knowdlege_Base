@@ -26,7 +26,12 @@ public class Tag {
     @Column(name= "tag_id")
     private Integer id;
 
-    @ManyToMany(mappedBy="tags", fetch = FetchType.LAZY, targetEntity = Eintrag.class)
+    //@ManyToMany(mappedBy="tags", fetch = FetchType.LAZY, targetEntity = Eintrag.class)
+    @ManyToMany(cascade = {CascadeType.PERSIST},targetEntity = Eintrag.class)
+    @JoinTable(name="eintrag_tag",
+            joinColumns=@JoinColumn(name="tag_id"),
+            inverseJoinColumns=@JoinColumn(name="id")
+    )
     private Set<String> tag= new HashSet<String>();
 
     public Tag() {

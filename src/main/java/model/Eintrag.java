@@ -33,7 +33,12 @@ public class Eintrag {
 	@Column
 	private boolean deleted;
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
+	//@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
+	//@JoinTable(name="eintrag_tag",
+	//		joinColumns=@JoinColumn(name="id"),
+	//		inverseJoinColumns=@JoinColumn(name="tag_id")
+	//)
+	@ManyToMany(cascade = {CascadeType.PERSIST},targetEntity = Tag.class)
 	@JoinTable(name="eintrag_tag",
 			joinColumns=@JoinColumn(name="id"),
 			inverseJoinColumns=@JoinColumn(name="tag_id")
