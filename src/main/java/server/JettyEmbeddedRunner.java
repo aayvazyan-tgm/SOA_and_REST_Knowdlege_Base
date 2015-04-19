@@ -60,19 +60,6 @@ public class JettyEmbeddedRunner {
 
 			ConnectMysql cm= ConnectMysql.get(ds);
 
-			ResultSet rs= cm.executeQuery("select * from Eintrag");
-
-			try {
-				while(rs.next()) {
-
-					System.out.println(rs.getString("title"));
-
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
