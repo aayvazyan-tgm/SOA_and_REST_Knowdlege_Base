@@ -33,6 +33,9 @@ public class Eintrag {
 	@Column
 	private boolean deleted;
 
+	@Column
+	private String content;
+
 	//@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
 	//@JoinTable(name="eintrag_tag",
 	//		joinColumns=@JoinColumn(name="id"),
@@ -108,5 +111,13 @@ public class Eintrag {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

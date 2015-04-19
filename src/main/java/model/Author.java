@@ -29,6 +29,10 @@ public class Author {
 		return dateJoined;
 	}
 
+	public void setDateJoined(Date dateJoined) {
+		this.dateJoined= dateJoined;
+	}
+
 	public Set<Eintrag> getEintrag() {
 		return eintrag;
 	}
