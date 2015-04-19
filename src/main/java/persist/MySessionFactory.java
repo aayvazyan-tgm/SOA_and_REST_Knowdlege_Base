@@ -44,7 +44,6 @@ public class MySessionFactory {
                     .setProperty("hibernate.hbm2ddl.auto", "create")
                     .setProperty("hibernate.show_sql", "true")
 
-                    .addAnnotatedClass(Rest.class)
                     .addAnnotatedClass(Author.class)
                     .addAnnotatedClass(Tag.class)
                     .addAnnotatedClass(Eintrag.class);
