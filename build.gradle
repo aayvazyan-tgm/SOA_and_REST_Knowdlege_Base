@@ -22,7 +22,8 @@ dependencies {
     compile 'org.hibernate:hibernate-core:4.3.9.Final'
     //H2
     compile 'com.h2database:h2:1.4.187'
-
+    //Mysql
+    compile 'mysql:mysql-connector-java:5.1.6'
     //To compile the WSDL
     compile 'org.apache.axis:axis:1.4'
     compile 'commons-logging:commons-logging:1.2'
