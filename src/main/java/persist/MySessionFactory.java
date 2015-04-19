@@ -27,15 +27,24 @@ public class MySessionFactory {
     private MySessionFactory() {
 
             Configuration config= new Configuration()
-                    .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
-                    .setProperty("hibernate.connection.driver_class", "org.h2.Driver")
-                    .setProperty("hibernate.connection.url", "jdbc:h2:tcp/./knowledgebase;mv_store=false")
-                    .setProperty("hibernate.connection.username", "sa")
-                    .setProperty("hibernate.connection.password", "")
+                    //.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
+                    //.setProperty("hibernate.connection.driver_class", "org.h2.Driver")
+                    //.setProperty("hibernate.connection.url", "jdbc:h2:tcp/./knowdlegebase;mv_store=false")
+                    //.setProperty("hibernate.connection.username", "sa")
+                    //.setProperty("hibernate.connection.password", "")
+                    //.setProperty("hibernate.hbm2ddl.auto", "create")
+                    //.setProperty("hibernate.show_sql", "true")
+                    //
+
+                    .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect")
+                    .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
+                    .setProperty("hibernate.connection.url", "jdbc:mysql://192.168.0.14/knowldegebase")
+                    .setProperty("hibernate.connection.username", "helmuth")
+                    .setProperty("hibernate.connection.password", "helmuth")
                     .setProperty("hibernate.hbm2ddl.auto", "create")
                     .setProperty("hibernate.show_sql", "true")
 
-                    //.addAnnotatedClass(Rest.class)
+                    .addAnnotatedClass(Rest.class)
                     .addAnnotatedClass(Author.class)
                     .addAnnotatedClass(Tag.class)
                     .addAnnotatedClass(Eintrag.class);

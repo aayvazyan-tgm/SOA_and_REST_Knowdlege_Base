@@ -7,6 +7,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import persist.MySessionFactory;
@@ -54,64 +55,61 @@ public class JettyEmbeddedRunner {
 			Author a= new Author();
 			a.setName("TestUser");
 			a.setEmail("test@email.com");
-			mySessionFactory.save(a);
+			mySessionFactory.saveOrUpdate(a);
 
 			Eintrag e= new Eintrag();
 			e.setTitle("Titel");
 			e.setAuthor(a);
 			e.setDeleted(false);
 
+			mySessionFactory.saveOrUpdate(e);
+
+			// write to manytomany
+			SessionFactory sessionFactory= mySessionFactory.getSessionFactory();
+			Session session= sessionFactory.openSession();
+
+			session.beginTransaction();
+
 			Set<String> tags= new HashSet<String>();
 			tags.add("tag_0");
 			tags.add("tag_1");
 			tags.add("tag_2");
 
-			Tag tag0= new Tag();
-			tag0.setTags(tags);
-			tag0.setId(new Integer(0));
-			mySessionFactory.saveOrUpdate(tag0);
+			Tag t0= new Tag();
+			t0.setTags(tags);
 
-			Tag tag1= new Tag();
-			tag1.setTags(tags);
-			mySessionFactory.save(tag1);
+			tags.clear();
+			tags.add("tag_3");
+			tags.add("tag_4");
+			tags.add("tag_5");
 
-			Set<Tag> sum= new HashSet<Tag>();
-			sum.add(tag0);
-			sum.add(tag1);
-			e.setTags(sum);
+			Tag t1= new Tag();
+			t1.setTags(tags);
 
-			//mySessionFactory.saveOrUpdate(e);
+			Set<Tag> setTags= new HashSet<Tag>();
+			setTags.add(t0);
+			setTags.add(t1);
 
-			SessionFactory sessionFactory= mySessionFactory.getSessionFactory();
-			Session session= sessionFactory.openSession();
+			e.setTags(setTags);
 
-			String[] selectiontags = {"tag_0", "tag_1"};
+			session.saveOrUpdate(e);
+			session.getTransaction().commit();
 
-			Set<String> selectionTags= new HashSet<String>();
-			selectionTags.add("tag_0");
-			selectionTags.add("tag_1");
+			// working ---- ^^
 
-			//String dump= "select distinct a from Article a " +
-			//		"join a.tags t " +
-			//		"where t.name in (:tags)";
-			//
-			//String hql= "select e from Eintrag e " +
-			//		"join e.tag t " +
-			//		"where t.tag in (:inputtags)";
+			// select from Eintrag
 
-			String hqltest= "select distinct e.tags from Eintrag e " +
-					"";
+			String hqltest= "from Eintrag";
 
-			//Query query= session.createQuery(hqltest);
-			//query.setParameterList("inputtags", selectionTags);
+			session.beginTransaction();
 
-			//List<Eintrag> erg= session.createQuery(hqltest).list();
+			List<Eintrag> erg= session.createQuery(hqltest).list();
 
+			for(Eintrag eintrag : erg) {
+				System.out.println(eintrag.getTitle());
+			}
 
-			//for(Eintrag eintrag : erg) {
-			//	System.out.println("In loop");
-			//	System.out.println(eintrag.getTitle());
-			//}
+			session.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();

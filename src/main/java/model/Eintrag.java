@@ -33,10 +33,11 @@ public class Eintrag {
 	@Column
 	private boolean deleted;
 
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="EINTRAG_TAG",
-			joinColumns={@JoinColumn(name="id")},
-			inverseJoinColumns={@JoinColumn(name="tag_id")})
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
+	@JoinTable(name="eintrag_tag",
+			joinColumns=@JoinColumn(name="id"),
+			inverseJoinColumns=@JoinColumn(name="tag_id")
+	)
 	private Set<Tag> tags= new HashSet<Tag>();
 
 	@PreUpdate
@@ -72,12 +73,12 @@ public class Eintrag {
 		this.deleted = deleted;
 	}
 
-	public String getTitle() {
-		return title;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Date getModifikationDate() {
@@ -96,11 +97,11 @@ public class Eintrag {
 		this.tags = tags;
 	}
 
-	public Integer getId() {
-		return  id;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setId(Integer id) {
-		this. id = id;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }

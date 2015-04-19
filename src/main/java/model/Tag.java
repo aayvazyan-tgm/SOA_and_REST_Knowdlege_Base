@@ -26,9 +26,7 @@ public class Tag {
     @Column(name= "tag_id")
     private Integer id;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            mappedBy = "tags",
-            targetEntity = Eintrag.class)
+    @ManyToMany(mappedBy="tags", fetch = FetchType.LAZY, targetEntity = Eintrag.class)
     private Set<String> tag= new HashSet<String>();
 
     public Tag() {
