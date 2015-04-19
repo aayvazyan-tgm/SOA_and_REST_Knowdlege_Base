@@ -3,6 +3,7 @@ package model;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -10,6 +11,10 @@ import java.util.Set;
 public class Eintrag {
 
 	@Id
+	@GeneratedValue
+	@Column(name= "id")
+	private Integer id;
+
 	@Column(name= "title")
 	private String title;
 
@@ -28,9 +33,11 @@ public class Eintrag {
 	@Column
 	private boolean deleted;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Tag.class)
-	@JoinTable(name= "eintrag_tag", joinColumns= { @JoinColumn(name = "title") }, inverseJoinColumns = { @JoinColumn(name = "tag_name") })
-	private Set<Tag> tag;
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name="EINTRAG_TAG",
+			joinColumns={@JoinColumn(name="id")},
+			inverseJoinColumns={@JoinColumn(name="tag_id")})
+	private Set<Tag> tags= new HashSet<Tag>();
 
 	@PreUpdate
 	public void onUpdate() {
@@ -81,11 +88,19 @@ public class Eintrag {
 		this.modifikationDate = modifikationDate;
 	}
 
-	public Set<Tag> getTag() {
-		return tag;
+	public Set<Tag> getTags() {
+		return tags;
 	}
 
-	public void setTags(Set<Tag> tag) {
-		this.tag = tag;
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public Integer getId() {
+		return  id;
+	}
+
+	public void setId(Integer id) {
+		this. id = id;
 	}
 }

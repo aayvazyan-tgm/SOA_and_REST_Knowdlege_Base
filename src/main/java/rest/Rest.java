@@ -28,7 +28,7 @@ public class Rest {
 
     @PersistenceContext(unitName="CustomerService",
             type=PersistenceContextType.TRANSACTION)
-    EntityManager entityManager;
+        EntityManager entityManager;
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
@@ -62,9 +62,13 @@ public class Rest {
     @Produces(MediaType.APPLICATION_XML)
     @Path("findThreadByTag/{tag}")
     public List<Eintrag> findThreadByTag(@PathParam("tag") String tag) {
+        entityManager.getTransaction().begin();
         Query query = entityManager.createQuery("SELECT c FROM Eintrag c", Eintrag.class); //TODO YAY Helmuth machts
         query.setParameter("tag", tag);
-        return query.getResultList();
+        List<Eintrag> list= query.getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return list;
     }
 
 }

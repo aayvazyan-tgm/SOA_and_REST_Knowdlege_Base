@@ -1,6 +1,5 @@
 package model;
 
-
 import javax.persistence.*;
 
 import java.util.HashSet;
@@ -23,13 +22,14 @@ import java.util.Set;
 public class Tag {
 
     @Id
-    @Column
     @GeneratedValue
+    @Column(name= "tag_id")
     private Integer id;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, targetEntity = Eintrag.class)
-    @JoinColumn(name= "tag_eintrag")
-    private Set<String> tag= new HashSet<String>(0);
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "tags",
+            targetEntity = Eintrag.class)
+    private Set<String> tag= new HashSet<String>();
 
     public Tag() {
     }

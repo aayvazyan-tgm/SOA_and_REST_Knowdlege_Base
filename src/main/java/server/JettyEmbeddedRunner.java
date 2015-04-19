@@ -49,8 +49,6 @@ public class JettyEmbeddedRunner {
 
 			server.start();
 
-
-
 			//WTF?
 			MySessionFactory mySessionFactory= MySessionFactory.getInstance();
 			Author a= new Author();
@@ -62,16 +60,27 @@ public class JettyEmbeddedRunner {
 			e.setTitle("Titel");
 			e.setAuthor(a);
 			e.setDeleted(false);
-			mySessionFactory.save(e);
 
 			Set<String> tags= new HashSet<String>();
 			tags.add("tag_0");
 			tags.add("tag_1");
 			tags.add("tag_2");
 
-			Tag tag= new Tag();
-			tag.setTags(tags);
-			mySessionFactory.save(tag);
+			Tag tag0= new Tag();
+			tag0.setTags(tags);
+			tag0.setId(new Integer(0));
+			mySessionFactory.saveOrUpdate(tag0);
+
+			Tag tag1= new Tag();
+			tag1.setTags(tags);
+			mySessionFactory.save(tag1);
+
+			Set<Tag> sum= new HashSet<Tag>();
+			sum.add(tag0);
+			sum.add(tag1);
+			e.setTags(sum);
+
+			//mySessionFactory.saveOrUpdate(e);
 
 			SessionFactory sessionFactory= mySessionFactory.getSessionFactory();
 			Session session= sessionFactory.openSession();
@@ -90,19 +99,19 @@ public class JettyEmbeddedRunner {
 			//		"join e.tag t " +
 			//		"where t.tag in (:inputtags)";
 
-			String hqltest= "select distinct e.tag from Eintrag e " +
+			String hqltest= "select distinct e.tags from Eintrag e " +
 					"";
 
 			//Query query= session.createQuery(hqltest);
 			//query.setParameterList("inputtags", selectionTags);
 
-			List<Eintrag> erg= session.createQuery(hqltest).list();
+			//List<Eintrag> erg= session.createQuery(hqltest).list();
 
 
-			for(Eintrag eintrag : erg) {
-				System.out.println("In loop");
-				System.out.println(eintrag.getTitle());
-			}
+			//for(Eintrag eintrag : erg) {
+			//	System.out.println("In loop");
+			//	System.out.println(eintrag.getTitle());
+			//}
 
 		} catch (Exception e) {
 			e.printStackTrace();

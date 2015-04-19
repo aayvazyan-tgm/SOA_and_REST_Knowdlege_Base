@@ -35,8 +35,7 @@ public class MySessionFactory {
                     .setProperty("hibernate.hbm2ddl.auto", "create")
                     .setProperty("hibernate.show_sql", "true")
 
-
-                    .addAnnotatedClass(Rest.class)
+                    //.addAnnotatedClass(Rest.class)
                     .addAnnotatedClass(Author.class)
                     .addAnnotatedClass(Tag.class)
                     .addAnnotatedClass(Eintrag.class);
@@ -66,7 +65,7 @@ public class MySessionFactory {
     public void save(Object u) {
         Session session= sessionFactory.openSession();
         Transaction transaction= session.beginTransaction();
-        session.persist(u);
+        session.save(u);
         transaction.commit();
         session.close();
     }
@@ -106,5 +105,13 @@ public class MySessionFactory {
         List l= session.createQuery(s).list();
         session.close();
         return l;
+    }
+
+    public void saveOrUpdate(Object o) {
+        Session session= sessionFactory.openSession();
+        Transaction transaction= session.beginTransaction();
+        session.saveOrUpdate(o);
+        transaction.commit();
+        session.close();
     }
 }
