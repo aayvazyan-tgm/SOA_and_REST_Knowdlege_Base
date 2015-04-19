@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
             new JettyEmbeddedRunner().startServer(8081);
             System.out.println("Started Servlet/s");
-            SOAPublisher.publish();
-            new SOAClient("localhost", 8081, "SOA");
+            SOAPublisher.publish(); //8082
+            new SOAClient("localhost", 8082, "SOA");
     }
 }

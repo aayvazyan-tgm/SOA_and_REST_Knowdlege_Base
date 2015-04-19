@@ -37,10 +37,10 @@ public class Servlet extends HttpServlet {
         //This line is Important to generate a Valid HTML Form
         out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \n" +
                 "  \"http://www.w3.org/TR/html4/loose.dtd\">");
-        out.println("<html><head><title></title></head><body>");
+        out.println("<html><head><title>Client</title></head><body>");
         //this is where the fun part starts
         //The title
-        out.println("<div align=\"center\"><h1>Standalone Jetty Runner</h1>");
+        out.println("<div align=\"center\"><h1>Standalone REST and SOA Service</h1>");
         //The upper border
         out.println("<hr style=\"color:blue; background-color:blue; height:15px; width:80%;\">");
         //The start date

@@ -7,8 +7,9 @@ import javax.xml.ws.Endpoint;
  */
 public class SOAPublisher {
     public static void publish() {
-        Endpoint.publish("http://localhost:8082/soa/SOASearcher", new SOASearcher());
-        System.out.println("Published");
-    }
+        String publishToURL = "http://localhost:8082/soa/SOASearcher";
 
+        Endpoint.publish(publishToURL, new SOASearcher());
+        System.out.println("Published SOA at "+publishToURL);
+    }
 }
