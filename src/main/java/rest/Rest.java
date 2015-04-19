@@ -9,7 +9,6 @@ import model.Eintrag;
 import mysql.ConnectMysql;
 import mysql.DataSource;
 import org.hibernate.Session;
-import persist.MySessionFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,23 +41,56 @@ public class Rest {
     @POST
     @Consumes(MediaType.APPLICATION_XML)
     public void create(Eintrag eintrag) {
+        ConnectMysql connectMysql= ConnectMysql.get(DataSource.get());
+        connectMysql.executeQuery("INSERT INTO Eintrag VALUES (" +
+                "0," +
+                "CURDATE()," +
+                "'" + eintrag.isDeleted() + "'," +
+                "CURDATE()," +
+                "'"+ eintrag.getTitle() +"'," +
+                "'" + eintrag.getContent() + ""+ "'," +
+                "'"+ eintrag.getAuthorId() + "')");
     }
 
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("{name}")
     public Eintrag read(@PathParam("name") String name) {
-        return null;
+        ConnectMysql connectMysql= ConnectMysql.get(DataSource.get());
+        ResultSet rs= connectMysql.executeQuery("select * from Eintrag where title='" + name + "';");
+        Eintrag e= null;
+        Author a;
+        try {
+            if( rs.next() ) {
+                e = new Eintrag();
+                e.setId(rs.getInt("id"));
+                e.setTitle(name);
+                e.setAuthorId(rs.getString("email"));
+
+            }else {
+                return null;
+            }
+
+        } catch (SQLException exc) {
+            exc.printStackTrace();
+        }
+
+        return e;
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_XML)
     public void update(Eintrag customer) {
+        ConnectMysql connectMysql= ConnectMysql.get(DataSource.get());
+        ResultSet rs= connectMysql.executeQuery("update Eintrag SET where id= " + customer.getId());
+
     }
 
     @DELETE
     @Path("{name}")
     public void delete(@PathParam("name") String name) {
+        ConnectMysql connectMysql= ConnectMysql.get(DataSource.get());
+        connectMysql.executeQuery("delete from Eintrag where title='" + name + "';");
     }
 
     @GET
@@ -70,7 +102,7 @@ public class Rest {
         ResultSet rs= connectMysql.executeQuery("select * from Eintrag e " +
                 "inner join Tag_Eintrag te on te.id_eintrag = e.id" +
                 "inner join Tag t on t.id = te.id_tag" +
-                "where t.tag = '" + tag +  "';");
+                "where t.tag = '" + tag + "';");
 
 
         List<Eintrag> l= new ArrayList<Eintrag>();
@@ -78,17 +110,10 @@ public class Rest {
         try {
             while(rs.next()) {
                 Eintrag e= new Eintrag();
-                Author a= new Author();
-
-                ResultSet rs1= connectMysql.executeQuery("select * from Author where email='" + rs.getString("email") + "'");
-                while(rs1.next()) {
-                    a.setName(rs1.getString("name"));
-                    a.setEmail(rs.getString("email"));
-                }
 
                 e.setId(rs.getInt("id"));
                 e.setTitle(rs.getString("title"));
-                e.setAuthor(a);
+                e.setAuthorId(rs.getString("email"));
 
                 l.add(e);
             }

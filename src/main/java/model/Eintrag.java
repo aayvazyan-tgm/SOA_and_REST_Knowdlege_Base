@@ -20,7 +20,7 @@ public class Eintrag {
 
 	@JoinColumn(name= "email")
 	@ManyToOne
-	private Author author;
+	private String author_email;
 
 	@Column(updatable = false, nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -57,12 +57,12 @@ public class Eintrag {
 		creationDate= new Date();
 	}
 
-	public Author getAuthor() {
-		return author;
+	public String getAuthorId() {
+		return this.author_email;
 	}
 
-	public void setAuthor(Author author) {
-		this.author = author;
+	public void setAuthorId(String email) {
+		this.author_email = email;
 	}
 
 	public Date getCreationDate() {

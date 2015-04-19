@@ -55,7 +55,7 @@ public class Servlet extends HttpServlet {
         out.println("<form action=\".\">");
         out.println("<p>Action:<br><input name=\"action\" type=\"text\" size=\"30\" maxlength=\"30\"></p>");
         out.println("<p>Parameter:<br><input name=\"param\" type=\"text\" size=\"30\" maxlength=\"40\"></p>");
-        out.println("<input type=\"submit\" value=\" Ausführen \">");
+        out.println("<input type=\"submit\" value=\" Ausf&uuml;hren \">");
         out.println("</form>");
 
         //Results
