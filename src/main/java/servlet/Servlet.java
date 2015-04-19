@@ -43,6 +43,16 @@ public class Servlet extends HttpServlet {
         out.println("<div align=\"center\"><h1>Standalone REST and SOA Service</h1>");
         //The upper border
         out.println("<hr style=\"color:blue; background-color:blue; height:15px; width:80%;\">");
+
+        //ACTUAL CONTENT
+        out.println("<form action=\"input_text.htm\">");
+        out.println("<p>Vorname:<br><input name=\"action\" type=\"text\" size=\"30\" maxlength=\"30\"></p>");
+        out.println("<p>Zuname:<br><input name=\"param\" type=\"text\" size=\"30\" maxlength=\"40\"></p>");
+        out.println("<input type=\"submit\" value=\" Absenden \">");
+        out.println("</form>");
+
+
+
         //The start date
         out.println("Started at "+this.startDate.toString()+"<br/>");
         //out.println("Found: "+this.finder.getCounter()+" Primes <br>");

@@ -13,10 +13,14 @@ repositories {
 }
 
 dependencies {
+    //Standalone Jetty server
     compile 'org.eclipse.jetty:jetty-server:9.2.0.RC0'
     compile 'org.eclipse.jetty:jetty-servlet:9.2.0.RC0'
+    //JEE api
     compile 'javax:javaee-api:7.0'
+    //Hibernate
     compile 'org.hibernate:hibernate-core:4.3.9.Final'
+    //H2
     compile 'com.h2database:h2:1.4.187'
 
     //To compile the WSDL
